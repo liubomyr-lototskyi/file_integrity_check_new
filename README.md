@@ -1,9 +1,9 @@
 <h1>File Integrity Checker uses SHA-256 cryptographic hashing to create a baseline of your critical files and detect any changes. </h1>
 
-Detect unauthorized modifications to system files, configurations, or sensitive documents
-Meet audit requirements for file integrity monitoring (FIM)
-Early warning system for file encryption attacks
-Track and verify intentional vs. unintentional file changes
+<h3>Detect unauthorized modifications to system files, configurations, or sensitive documents</h3>
+<h3>Meet audit requirements for file integrity monitoring (FIM)</h3>
+<h3>Early warning system for file encryption attacks</h3>
+<h3>Track and verify intentional vs. unintentional file changes</h3>
 
 & First, create a test file to monitor
 echo "Hello World" > test.txt
