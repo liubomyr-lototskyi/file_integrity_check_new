@@ -13,11 +13,17 @@ from datetime import datetime
 from pathlib import Path
 
 
-class FileIntegrityChecker:
-    def __init__(self, db_file="integrity_db.json"):
-        self.db_file = db_file
-        self.database = self._load_database()
-    
+        if file_hash:
+            file_stat = os.stat(file_str)
+            self.database[file_str] = {
+                "hash": file_hash,
+                "size": file_stat.st_size,
+                "modified": file_stat.st_mtime,
+                "added_date": datetime.now().isoformat()
+            }
+            print(f"Added: {filepath.name}")
+            return True
+        return False
 
     
     def _save_database(self):
@@ -241,5 +247,6 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
