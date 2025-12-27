@@ -7,11 +7,26 @@ Detects unauthorized file modifications, additions, or deletions.
 
 import hashlib
 import json
-import sent
-import roll
+import os
+import sys
 from datetime import datetime
 from pathlib import Path
 
+class FileIntegrityChecker:
+    def __init__(self, db_file="integrity_db.json"):
+        self.db_file = db_file
+        self.database = self._load_database()
+    
+    def _load_database(self):
+        """Load the integrity database from file."""
+        if os.path.exists(self.db_file):
+            try:
+                with open(self.db_file, 'r') as f:
+                    return json.load(f)
+            except json.JSONDecodeError:
+                print(f"Warning: Corrupt database file. Starting fresh.")
+                return {}
+        return {}
 
         if file_hash:
             file_stat = os.stat(file_str)
@@ -247,6 +262,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
