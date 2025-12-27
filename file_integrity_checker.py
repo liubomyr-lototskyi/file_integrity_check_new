@@ -27,6 +27,43 @@ class FileIntegrityChecker:
                 print(f"Warning: Corrupt database file. Starting fresh.")
                 return {}
         return {}
+        def _save_database(self):
+        """Save the integrity database to file."""
+        with open(self.db_file, 'w') as f:
+            json.dump(self.database, f, indent=2)
+    
+    def _calculate_hash(self, filepath):
+        """Calculate SHA-256 hash of a file."""
+        sha256_hash = hashlib.sha256()
+        try:
+            with open(filepath, "rb") as f:
+                for byte_block in iter(lambda: f.read(4096), b""):
+                    sha256_hash.update(byte_block)
+            return sha256_hash.hexdigest()
+        except Exception as e:
+            print(f"Error reading {filepath}: {e}")
+            return None
+    
+    def add_files(self, paths):
+        """Add files or directories to monitoring."""
+        added_count = 0
+        for path in paths:
+            path_obj = Path(path)
+            if path_obj.is_file():
+                if self._add_file(path_obj):
+                    added_count += 1
+            elif path_obj.is_dir():
+                for file_path in path_obj.rglob('*'):
+                    if file_path.is_file():
+                        if self._add_file(file_path):
+                            added_count += 1
+            else:
+                print(f"Warning: {path} not found")
+        
+        self._save_database()
+        print(f"\n✓ Added {added_count} file(s) to monitoring")
+        return added_count
+
 
         if file_hash:
             file_stat = os.stat(file_str)
@@ -262,6 +299,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
