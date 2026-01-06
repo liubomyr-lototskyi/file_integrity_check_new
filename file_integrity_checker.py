@@ -32,7 +32,7 @@ class FileIntegrityChecker:
         with open(self.db_file, 'w') as f:
             json.dump(self.database, f, indent=2)
     
-    def _calculate_hash(self, filepath):
+    def _calculate_hash(self, filepath):https://github.com/liubomyr-lototskyi/file_integrity_check_new/blob/main/file_integrity_checker.py
         """Calculate SHA-256 hash of a file."""
         sha256_hash = hashlib.sha256()
         try:
@@ -64,10 +64,7 @@ class FileIntegrityChecker:
         print(f"\n✓ Added {added_count} file(s) to monitoring")
         return added_count
         
-    def _add_file(self, filepath):
-        """Add a single file to the database."""
-        file_str = str(filepath.absolute())
-        file_hash = self._calculate_hash(file_str)
+
 
 
         if file_hash:
@@ -304,6 +301,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
