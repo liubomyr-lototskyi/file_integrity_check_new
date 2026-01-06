@@ -60,16 +60,7 @@ class FileIntegrityChecker:
             else:
                 print(f"Warning: {path} not found")
         
-        self._save_database()
-        print(f"\n✓ Added {added_count} file(s) to monitoring")
-        return added_count
-        
 
-    
-    def _save_database(self):
-        """Save the integrity database to file."""
-        with open(self.db_file, 'w') as f:
-            json.dump(self.database, f, indent=2)
     
     def _calculate_hash(self, filepath):
         """Calculate SHA-256 hash of a file."""
@@ -287,6 +278,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
