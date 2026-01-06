@@ -65,20 +65,6 @@ class FileIntegrityChecker:
         return added_count
         
 
-
-
-        if file_hash:
-            file_stat = os.stat(file_str)
-            self.database[file_str] = {
-                "hash": file_hash,
-                "size": file_stat.st_size,
-                "modified": file_stat.st_mtime,
-                "added_date": datetime.now().isoformat()
-            }
-            print(f"Added: {filepath.name}")
-            return True
-        return False
-
     
     def _save_database(self):
         """Save the integrity database to file."""
@@ -301,6 +287,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
