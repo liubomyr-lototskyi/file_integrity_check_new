@@ -7,7 +7,6 @@ Detects unauthorized file modifications, additions, or deletions.
 
 import hashlib
 import json
-import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -266,6 +265,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
