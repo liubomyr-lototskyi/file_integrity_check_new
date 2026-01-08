@@ -59,8 +59,22 @@ class FileIntegrityChecker:
                             added_count += 1
             else:
                 print(f"Warning: {path} not found")
-        
 
+    def _add_file(self, filepath):
+        """Add a single file to the database."""
+        file_str = str(filepath.absolute())
+        file_hash = self._calculate_hash(file_str)
+        
+        if file_hash:
+            file_stat = os.stat(file_str)
+            self.database[file_str] = {
+                "hash": file_hash,
+                "size": file_stat.st_size,
+                "modified": file_stat.st_mtime,
+                "added_date": datetime.now().isoformat()
+            }
+            print(f"Added: {filepath.name}")
+            return True
     
     def _calculate_hash(self, filepath):
         """Calculate SHA-256 hash of a file."""
@@ -278,6 +292,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
