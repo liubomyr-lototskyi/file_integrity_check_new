@@ -7,8 +7,11 @@ Detects unauthorized file modifications, additions, or deletions.
 
 import hashlib
 import json
+import os
+import sys
 from datetime import datetime
 from pathlib import Path
+
 
 class FileIntegrityChecker:
     def __init__(self, db_file="integrity_db.json"):
@@ -265,6 +268,7 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
 
