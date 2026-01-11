@@ -223,8 +223,76 @@ class FileIntegrityChecker:
             self._save_database()
             print(f"\n✓ Updated baseline for {updated_count} file(s)")
 
+def print_usage():
+    """Print usage information."""
+    print("""
+File Integrity Checker - Usage:
 
+  python file_integrity_checker.py add <file/directory> [...]
+      Add files or directories to monitoring
+      
+  python file_integrity_checker.py check
+      Check integrity of all monitored files
+      
+  python file_integrity_checker.py list
+      List all monitored files
+      
+  python file_integrity_checker.py remove <file> [...]
+      Remove files from monitoring
+      
+  python file_integrity_checker.py update [file ...]
+      Update baseline hash for files (all if none specified)
+
+Examples:
+  python file_integrity_checker.py add /etc/passwd /etc/shadow
+  python file_integrity_checker.py add ~/important_docs/
+  python file_integrity_checker.py check
+  python file_integrity_checker.py update /etc/passwd
+    """)
+
+
+def main():
+    if len(sys.argv) < 2:
+        print_usage()
+        sys.exit(1)
     
+    command = sys.argv[1].lower()
+    checker = FileIntegrityChecker()
+    
+    if command == "add":
+        if len(sys.argv) < 3:
+            print("Error: Specify files or directories to add")
+            sys.exit(1)
+        checker.add_files(sys.argv[2:])
+    
+    elif command == "check":
+        checker.check_integrity()
+    
+    elif command == "list":
+        checker.list_files()
+    
+    elif command == "remove":
+        if len(sys.argv) < 3:
+            print("Error: Specify files to remove")
+            sys.exit(1)
+        checker.remove_files(sys.argv[2:])
+    
+    elif command == "update":
+        if len(sys.argv) > 2:
+            checker.update_baseline(sys.argv[2:])
+        else:
+            checker.update_baseline()
+    
+    else:
+        print(f"Unknown command: {command}")
+        print_usage()
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
+    
+
 
 
 
