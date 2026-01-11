@@ -12,7 +12,6 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-
 class FileIntegrityChecker:
     def __init__(self, db_file="integrity_db.json"):
         self.db_file = db_file
@@ -28,6 +27,7 @@ class FileIntegrityChecker:
                 print(f"Warning: Corrupt database file. Starting fresh.")
                 return {}
         return {}
+        
         def _save_database(self):
         """Save the integrity database to file."""
         with open(self.db_file, 'w') as f:
@@ -224,50 +224,8 @@ class FileIntegrityChecker:
             print(f"\n✓ Updated baseline for {updated_count} file(s)")
 
 
+    
 
-
-
-def main():
-    if len(sys.argv) < 2:
-        print_usage()
-        sys.exit(1)
-    
-    command = sys.argv[1].lower()
-    checker = FileIntegrityChecker()
-    
-    if command == "add":
-        if len(sys.argv) < 3:
-            print("Error: Specify files or directories to add")
-            sys.exit(1)
-        checker.add_files(sys.argv[2:])
-    
-    elif command == "check":
-        checker.check_integrity()
-    
-    elif command == "list":
-        checker.list_files()
-    
-    elif command == "remove":
-        if len(sys.argv) < 3:
-            print("Error: Specify files to remove")
-            sys.exit(1)
-        checker.remove_files(sys.argv[2:])
-    
-    elif command == "update":
-        if len(sys.argv) > 2:
-            checker.update_baseline(sys.argv[2:])
-        else:
-            checker.update_baseline()
-    
-    else:
-        print(f"Unknown command: {command}")
-        print_usage()
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-
-    main()
 
 
 
