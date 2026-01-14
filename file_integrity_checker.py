@@ -108,8 +108,7 @@ class FileIntegrityChecker:
                     print(f"  Current hash:  {current_hash[:16]}...")
                 else:
                     intact.append(filepath)
-
-        
+ 
         # Summary
         print(f"\n{'='*60}")
         print(f"INTEGRITY CHECK SUMMARY")
@@ -181,6 +180,7 @@ class FileIntegrityChecker:
             self._save_database()
             print(f"\n✓ Updated baseline for {updated_count} file(s)")
 
+
 def print_usage():
     """Print usage information."""
     print("""
@@ -249,14 +249,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-
-
-
-
-
-
-
 
 
 
