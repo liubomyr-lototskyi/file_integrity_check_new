@@ -2,7 +2,7 @@
 """
 File Integrity Checker
 A simple cybersecurity tool to monitor file integrity by tracking file hashes.
-Detects unauthorized file modifications, additions, or deletions.
+Detects unauthorized modifications, additions, or deletions.
 """
 
 import hashlib
@@ -11,6 +11,7 @@ import os
 import sys
 from datetime import datetime
 from pathlib import Path
+
 
 class FileIntegrityChecker:
     def __init__(self, db_file="integrity_db.json"):
@@ -27,55 +28,11 @@ class FileIntegrityChecker:
                 print(f"Warning: Corrupt database file. Starting fresh.")
                 return {}
         return {}
-        
-        def _save_database(self):
+    
+    def _save_database(self):
         """Save the integrity database to file."""
         with open(self.db_file, 'w') as f:
             json.dump(self.database, f, indent=2)
-    
-    def _calculate_hash(self, filepath):https://github.com/liubomyr-lototskyi/file_integrity_check_new/blob/main/file_integrity_checker.py
-        """Calculate SHA-256 hash of a file."""
-        sha256_hash = hashlib.sha256()
-        try:
-            with open(filepath, "rb") as f:
-                for byte_block in iter(lambda: f.read(4096), b""):
-                    sha256_hash.update(byte_block)
-            return sha256_hash.hexdigest()
-        except Exception as e:
-            print(f"Error reading {filepath}: {e}")
-            return None
-    
-    def add_files(self, paths):
-        """Add files or directories to monitoring."""
-        added_count = 0
-        for path in paths:
-            path_obj = Path(path)
-            if path_obj.is_file():
-                if self._add_file(path_obj):
-                    added_count += 1
-            elif path_obj.is_dir():
-                for file_path in path_obj.rglob('*'):
-                    if file_path.is_file():
-                        if self._add_file(file_path):
-                            added_count += 1
-            else:
-                print(f"Warning: {path} not found")
-
-    def _add_file(self, filepath):
-        """Add a single file to the database."""
-        file_str = str(filepath.absolute())
-        file_hash = self._calculate_hash(file_str)
-        
-        if file_hash:
-            file_stat = os.stat(file_str)
-            self.database[file_str] = {
-                "hash": file_hash,
-                "size": file_stat.st_size,
-                "modified": file_stat.st_mtime,
-                "added_date": datetime.now().isoformat()
-            }
-            print(f"Added: {filepath.name}")
-            return True
     
     def _calculate_hash(self, filepath):
         """Calculate SHA-256 hash of a file."""
@@ -151,6 +108,7 @@ class FileIntegrityChecker:
                     print(f"  Current hash:  {current_hash[:16]}...")
                 else:
                     intact.append(filepath)
+
         
         # Summary
         print(f"\n{'='*60}")
@@ -292,6 +250,7 @@ def main():
 if __name__ == "__main__":
     main()
     
+
 
 
 
